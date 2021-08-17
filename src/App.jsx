@@ -1,4 +1,3 @@
-import { Route, Switch } from 'react-router';
 import { useSelector } from 'react-redux';
 import { Layout } from 'antd';
 import MyHeader from './components/MyHeader/MyHeader';
@@ -24,9 +23,7 @@ const App = () => {
           <MySideBar />
 
           <Content style={{ padding: '0 24px', minHeight: 280 }}>
-            <Switch>
-              <Route exact path='/' render={() => <MyContent />} />
-            </Switch>
+            <MyContent />
           </Content>
         </Layout>
       </Content>
