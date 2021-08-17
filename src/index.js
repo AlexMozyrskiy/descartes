@@ -1,17 +1,20 @@
 import React from 'react';
+
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+
+import App from './App';
+
 import store from './state/redux-store/redux';
-import { WithTargetTimeStamp } from './HOC/WithTargetTimeStamp';
+
+import './index.css';
 
 ReactDOM.render(
   <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Provider store={store}>
-      <WithTargetTimeStamp Component={App} />
+      <App />
     </Provider>
   </BrowserRouter>,
   document.getElementById('root')
