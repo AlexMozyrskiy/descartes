@@ -1,5 +1,4 @@
-import { WORK_BOOK_DATA } from './actionTypes';
-import { retreatColumnHeaderNames } from '../../../CONSTS/sheetsHeaderConsts';
+import { WORK_BOOK_DATA, IS_DATA_LOADED } from './actionTypes';
 
 const initialState = {
   retreatSheetsData: [
@@ -21,6 +20,7 @@ const initialState = {
       speedLimit: '',
     },
   ],
+  isDataLoaded: false,
 };
 
 const videoRetreatDataReducers = (state = initialState, action) => {
@@ -47,6 +47,14 @@ const videoRetreatDataReducers = (state = initialState, action) => {
             speedLimit: item.speedLimit,
           };
         }),
+      };
+      return superState;
+    }
+
+    case IS_DATA_LOADED: {
+      const superState = {
+        ...state,
+        isDataLoaded: action.isDataLoaded,
       };
       return superState;
     }

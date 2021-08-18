@@ -1,14 +1,18 @@
 import XLSX from 'xlsx/dist/xlsx.full.min';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Upload, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Upload, Button, Alert } from 'antd';
+import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import { getArrayForState } from '../../../../library/helpers/forVSPMalfunctionRegisterComponent/getObjectForState';
-import { setVideoRetreatData } from '../../../../state/features/videoRetreatBookData/actionCreators';
+import { setVideoRetreatData, setIsDataLoaded } from '../../../../state/features/videoRetreatBookData/actionCreators';
+import { selectIsDataLoaded } from '../../../../state/features/videoRetreatBookData/selectors';
 
-const VSPMalfunctionRegister = () => {
+const VSPRetreatRegister = () => {
   const dispatch = useDispatch();
+
+  const isDataLoaded = useSelector(selectIsDataLoaded);
+
   // ------------ Пропсы которые будем передавать в Upload Ant Design, тут и метод при изменении аплоада, то есть загрузки файла ------------
   const props = {
     // name: 'file',
@@ -33,6 +37,7 @@ const VSPMalfunctionRegister = () => {
           const arrayForState = getArrayForState(workSheetDataObj);
 
           dispatch(setVideoRetreatData(arrayForState));
+          dispatch(setIsDataLoaded(true));
         };
 
         reader.onerror = function (event) {
@@ -40,11 +45,22 @@ const VSPMalfunctionRegister = () => {
         };
       }
     },
+    showUploadList: {
+      showDownloadIcon: true,
+      downloadIcon: 'download ',
+      showRemoveIcon: true,
+      removeIcon: <DeleteOutlined onClick={() => dispatch(setIsDataLoaded(false))} />,
+    },
   };
   // ------------ / Пропсы которые будем передавать в Upload Ant Design, тут и метод при изменении аплоада, то есть загрузки файла ----------
 
   return (
     <div>
+      {!isDataLoaded ? (
+        <Alert message='Загрузите Файл' type='error' showIcon />
+      ) : (
+        <Alert message='Файл Загружен' type='success' showIcon />
+      )}
       <Upload {...props}>
         <Button type='primary' icon={<UploadOutlined />}>
           Загрузить файл
@@ -54,4 +70,4 @@ const VSPMalfunctionRegister = () => {
   );
 };
 
-export default VSPMalfunctionRegister;
+export default VSPRetreatRegister;
