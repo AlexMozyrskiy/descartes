@@ -8,8 +8,8 @@ const { Header } = Layout;
 const MyHeader = () => {
   return (
     <Header className='header'>
+      <h2 style={{ color: '#fff' }}>Декарт</h2>
       <Menu theme='dark' mode='horizontal' defaultSelectedKeys={['1']}>
-        <h2 style={{ color: '#fff' }}>Декарт</h2>
         {/* <Menu.Item key='1'>
           <NavLink to='/hi'>Привет</NavLink>
         </Menu.Item> */}

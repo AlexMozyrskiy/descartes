@@ -1,6 +1,6 @@
 import { WORK_BOOK_DATA, IS_DATA_LOADED } from './actionTypes';
 
-const initialState = {
+export const initialState = {
   retreatSheetsData: [
     /* каждый объект в массиве - 1 строка в экселе */
     {
