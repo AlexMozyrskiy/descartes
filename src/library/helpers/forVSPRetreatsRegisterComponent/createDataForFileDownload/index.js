@@ -22,54 +22,58 @@ export function createDataForFileDownload(data) {
     body: [], // 2 свойство массив массивов с данными для создания тела таблицы.
   };
 
-  const distancesList = data.map((item) => {
-    return item.distanceNumber;
-  });
+  /* Если файл уже загружен */
+  if (data[0].sequentialNumber) {
+    const distancesList = data.map((item) => {
+      return item.distanceNumber;
+    });
 
-  /* ---------- Первая строчка телеграммы ----------------- */
-  const uniqueDistanceNumbersArr = getUniqueNumbersFromArr(distancesList);
-  const uniqueDistanceNumbersStr = uniqueDistanceNumbersArr.join(',');
+    /* ---------- Первая строчка телеграммы ----------------- */
+    const uniqueDistanceNumbersArr = getUniqueNumbersFromArr(distancesList);
+    const uniqueDistanceNumbersStr = uniqueDistanceNumbersArr.join(',');
 
-  const regionsNumbersArr = uniqueDistanceNumbersArr.map((item) => {
-    const distansInfoObj = distancesAndRegions.find((distanceAndRegion) => distanceAndRegion.distanceNumber === item);
-    return distansInfoObj.regionNumber;
-  });
-  const uniqueRegionsNumbersArr = getUniqueNumbersFromArr(regionsNumbersArr);
-  const uniqueRegionsNumbersStr = uniqueRegionsNumbersArr.join(',');
+    const regionsNumbersArr = uniqueDistanceNumbersArr.map((item) => {
+      const distansInfoObj = distancesAndRegions.find((distanceAndRegion) => distanceAndRegion.distanceNumber === item);
+      return distansInfoObj.regionNumber;
+    });
+    const uniqueRegionsNumbersArr = getUniqueNumbersFromArr(regionsNumbersArr);
+    const uniqueRegionsNumbersStr = uniqueRegionsNumbersArr.join(',');
 
-  // Шапка таблицы
-  forXLSXAoA.push([
-    `ДИ, НЗ-РБ, ДИЗ-РБ, ДИЗтер-ДИтер-${uniqueRegionsNumbersStr}, П,РЦДМ, ДИЦУСИ, ПЧ-${uniqueDistanceNumbersStr}.`,
-  ]);
-  forBrowserPageRenderObj.header.push(
-    `ДИ, НЗ-РБ, ДИЗ-РБ, ДИЗтер-ДИтер-${uniqueRegionsNumbersStr}, П,РЦДМ, ДИЦУСИ, ПЧ-${uniqueDistanceNumbersStr}.`
-  );
-  /* ---------- / Первая строчка телеграммы --------------- */
-
-  /* ---------- Вторая строчка телеграммы ----------------- */
-  forXLSXAoA.push([`Выявлены замечания по результатам расшифровки линейного видеонаблюдения: – ${data.length} шт.: `]);
-  forBrowserPageRenderObj.body.push(
-    `Выявлены замечания по результатам расшифровки линейного видеонаблюдения: – ${data.length} шт.: `
-  );
-  /* ---------- Вторая строчка телеграммы ----------------- */
-
-  /* ---------- Последующие строки телеграммы, перечислем неисправности --------- */
-  data.forEach((item, i) => {
+    // Шапка таблицы
     forXLSXAoA.push([
-      `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${item.meter}м), ${item.thread} нить ${item.retreat}`,
+      `ДИ, НЗ-РБ, ДИЗ-РБ, ДИЗтер-ДИтер-${uniqueRegionsNumbersStr}, П,РЦДМ, ДИЦУСИ, ПЧ-${uniqueDistanceNumbersStr}.`,
     ]);
-
-    forBrowserPageRenderObj.body.push(
-      `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${item.meter}м), ${item.thread} нить ${item.retreat}`
+    forBrowserPageRenderObj.header.push(
+      `ДИ, НЗ-РБ, ДИЗ-РБ, ДИЗтер-ДИтер-${uniqueRegionsNumbersStr}, П,РЦДМ, ДИЦУСИ, ПЧ-${uniqueDistanceNumbersStr}.`
     );
-  });
-  /* ---------- / Последующие строки телеграммы, перечислем неисправности ------- */
+    /* ---------- / Первая строчка телеграммы --------------- */
+
+    /* ---------- Вторая строчка телеграммы ----------------- */
+    forXLSXAoA.push([
+      `Выявлены замечания по результатам расшифровки линейного видеонаблюдения: – ${data.length} шт.: `,
+    ]);
+    forBrowserPageRenderObj.body.push(
+      `Выявлены замечания по результатам расшифровки линейного видеонаблюдения: – ${data.length} шт.: `
+    );
+    /* ---------- Вторая строчка телеграммы ----------------- */
+
+    /* ---------- Последующие строки телеграммы, перечислем неисправности --------- */
+    data.forEach((item, i) => {
+      forXLSXAoA.push([
+        `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${item.meter}м), ${item.thread} нить ${item.retreat}`,
+      ]);
+
+      forBrowserPageRenderObj.body.push(
+        `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${item.meter}м), ${item.thread} нить ${item.retreat}`
+      );
+    });
+    /* ---------- / Последующие строки телеграммы, перечислем неисправности ------- */
+  }
 
   returnedObj = {
     forXLSXAoA,
     forBrowserPageRenderObj,
   };
-  console.log(returnedObj);
 
   return returnedObj;
 }

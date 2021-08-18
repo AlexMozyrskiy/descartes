@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { createDataForFileDownload as createDataForFileDownloadVSPRetreatsRegister } from '../../../library/helpers/forVSPRetreatsRegisterComponent/createDataForFileDownload';
 
 export const selectVideoRetreatData = (state) => {
   return state.videoRetreatData.retreatSheetsData;
@@ -20,7 +21,7 @@ export const selectCalculatedDataVSPRetreatTelegram = createSelector([selectVide
   let forExcelAndPageRenderingData = [];
 
   // ---------------- массив массивов для формаирования и аплоада отчетной книги по "1. 3 и 4 степени.xlsx" ------------------------
-  // forExcelAndPageRenderingData = createThirdAndFourthDegreesAoA(forAoACreatorAoO);
+  forExcelAndPageRenderingData = createDataForFileDownloadVSPRetreatsRegister(forAoACreatorAoO);
   // ---------------- / массив массивов для формаирования и аплоада отчетной книги по "1. 3 и 4 степени.xlsx" ----------------------
 
   // ------------------ Запишем собранные данные в объект ----------------------

@@ -49,7 +49,6 @@ const VSPRetreatRegister = () => {
 
           const workSheetDataObj = workBook.Sheets['Приложение 1 '];
           const arrayForState = getArrayForState(workSheetDataObj);
-          console.log(arrayForState);
 
           dispatch(setVideoRetreatData(arrayForState));
           dispatch(setIsDataLoaded(true));
@@ -71,15 +70,14 @@ const VSPRetreatRegister = () => {
 
   // ------------------------------------ Declare функцию вызывающуюся при нажатии на кнопку для выгрузки сформирвоанного отчетного файла ------------------------------------------------
   const onSaveButtonClick = () => {
-    createDataForFileDownload(data);
-    // const data = calculatingData.forXLSXAoA; // данные из селектора - массив массивов для формирования отчетной xlsx книги
+    const data = calculatingData.forXLSXAoA; // данные из селектора - массив массивов для формирования отчетной xlsx книги
 
-    // createAndUploadWorkBook(
-    //   // Создает и предлагает скачать юзеру книгу со сформированным отчетом
-    //   data, // данные для записи
-    //   '1. 3 и 4 степени.xlsx', // имя создаваемой отчетной книги
-    //   '3 и 4 степени' // имя листа в этой книге
-    // );
+    createAndUploadWorkBook(
+      // Создает и предлагает скачать юзеру книгу со сформированным отчетом
+      data, // данные для записи
+      'Телеграмма по таблице Ведомость учета неисправностей ВСП.xlsx', // имя создаваемой отчетной книги
+      'Телеграмма' // имя листа в этой книге
+    );
   };
   // ------------------------------------ Declare функцию вызывающуюся при нажатии на кнопку для выгрузки сформирвоанного отчетного файла ------------------------------------------------
 
@@ -95,7 +93,7 @@ const VSPRetreatRegister = () => {
           Загрузить файл
         </Button>
       </Upload>
-      <button onClick={onSaveButtonClick}></button>
+      <button onClick={() => onSaveButtonClick()}></button>
     </div>
   );
 };
