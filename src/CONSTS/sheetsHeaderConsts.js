@@ -1,5 +1,5 @@
 /* Названия заголовков таблицы */
-export const headersConst = {
+export const retreatColumnHeaderNames = {
   SEQUENTIAL_NUMBER: '№ п.п.',
   CAR_NUMBER: 'Номер вагона',
   DATE_OF_CHECK: 'Дата проезда',
@@ -8,6 +8,7 @@ export const headersConst = {
   TRACK_NUMBER: 'путь',
   DISTANCE_NUMBER: 'ПЧ, ИЧ',
   KILOMETER: 'км',
+  METER: 'м',
   PICKET: '',
   THREAD: 'Нить',
   RETREAT: 'Замечание',

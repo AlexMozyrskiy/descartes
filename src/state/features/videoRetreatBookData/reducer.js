@@ -1,5 +1,5 @@
 import { WORK_BOOK_DATA } from './actionTypes';
-import { headersConst } from '../../../CONSTS/sheetsHeaderConsts';
+import { retreatColumnHeaderNames } from '../../../CONSTS/sheetsHeaderConsts';
 
 const initialState = {
   retreatSheetsData: [
@@ -11,8 +11,9 @@ const initialState = {
       dateOfDecryption: '',
       stationName: '',
       trackNumber: '',
-      distanceNumber: null,
+      distanceNumber: '',
       kilometer: null,
+      meter: null,
       picket: null,
       thread: '',
       retreat: '',
@@ -28,21 +29,22 @@ const videoRetreatDataReducers = (state = initialState, action) => {
       const superState = {
         ...state,
 
-        retreatSheetsData: action.workBookDataObject.retreatSheetsData.map((item) => {
+        retreatSheetsData: action.retreatSheetsData.map((item) => {
           return {
-            sequentialNumber: +item[headersConst.SEQUENTIAL_NUMBER],
-            carNumber: item[headersConst.CAR_NUMBER],
-            dateOfCheck: item[headersConst.DATE_OF_CHECK],
-            dateOfDecryption: item[headersConst.DATE_OF_DECRYPTION],
-            stationName: item[headersConst.STATION_NAME],
-            trackNumber: item[headersConst.TRACK_NUMBER],
-            distanceNumber: +item[headersConst.DISTANCE_NUMBER],
-            kilometer: +item[headersConst.KILOMETER],
-            picket: +item[headersConst.PICKET],
-            thread: item[headersConst.THREAD],
-            retreat: item[headersConst.RETREAT],
-            restrictionNumber: +item[headersConst.RESTRICTION_NUMBER],
-            speedLimit: item[headersConst.SPEED_LIMIT],
+            sequentialNumber: +item.sequentialNumber,
+            carNumber: item.carNumber,
+            dateOfCheck: item.dateOfCheck,
+            dateOfDecryption: item.dateOfDecryption,
+            stationName: item.stationName,
+            trackNumber: item.trackNumber,
+            distanceNumber: +item.distanceNumber,
+            kilometer: +item.kilometer,
+            meter: +item.meter,
+            picket: +item.picket,
+            thread: item.thread,
+            retreat: item.retreat,
+            restrictionNumber: +item.restrictionNumber,
+            speedLimit: item.speedLimit,
           };
         }),
       };

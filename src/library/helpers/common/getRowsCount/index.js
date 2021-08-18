@@ -8,7 +8,7 @@ export const getRowsCount = (parsedObject) => {
   let counter = 0;
 
   Object.keys(parsedObject).forEach((item) => {
-    if (item.slice(0, 1) === 'A') {
+    if (item.substr(0, 1) === 'A') {
       counter++;
     }
   });

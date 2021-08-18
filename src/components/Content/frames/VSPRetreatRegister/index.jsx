@@ -1,11 +1,14 @@
 import XLSX from 'xlsx/dist/xlsx.full.min';
+import { useDispatch } from 'react-redux';
 
 import { Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-import { getRowsCount } from '../../../../library/helpers/getRowsCount';
+import { getArrayForState } from '../../../../library/helpers/forVSPMalfunctionRegisterComponent/getObjectForState';
+import { setVideoRetreatData } from '../../../../state/features/videoRetreatBookData/actionCreators';
 
 const VSPMalfunctionRegister = () => {
+  const dispatch = useDispatch();
   // ------------ Пропсы которые будем передавать в Upload Ant Design, тут и метод при изменении аплоада, то есть загрузки файла ------------
   const props = {
     // name: 'file',
@@ -14,7 +17,6 @@ const VSPMalfunctionRegister = () => {
     //     authorization: 'authorization-text',
     // },
     onChange(evt) {
-      let workBookData; // возвращаем объект для сета его в глобальные стейт
       const selectedFile = typeof evt.fileList[0] !== 'undefined' ? evt.fileList[0].originFileObj : null; // выбранный в браузере файл, один, так как запрещен мульти выбор файлов
 
       if (selectedFile) {
@@ -28,19 +30,12 @@ const VSPMalfunctionRegister = () => {
           });
 
           const workSheetDataObj = workBook.Sheets['Приложение 1 '];
-          const workSheetDataJson = XLSX.utils.sheet_to_json(workSheetDataObj);
-          console.log(workSheetDataObj);
-          console.log(getRowsCount(workSheetDataObj));
+          const arrayForState = getArrayForState(workSheetDataObj);
 
-          workBookData = {
-            retreatSheetsData: workSheetDataJson,
-          };
-
-          // dispatch(setWorkBookDataThunkCreator(workBookData));
+          dispatch(setVideoRetreatData(arrayForState));
         };
 
         reader.onerror = function (event) {
-          workBookData = null;
           console.error('Файл не может быть прочитан. Код ошибки: ' + event.target.error.code);
         };
       }
