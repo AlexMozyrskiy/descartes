@@ -57,9 +57,9 @@ const VSPRetreatRegister = () => {
   return (
     <div>
       {!isDataLoaded ? (
-        <Alert message='Загрузите Файл' type='error' showIcon />
+        <Alert message='Загрузите Файл' type='error' showIcon style={{ marginBottom: '10px' }} />
       ) : (
-        <Alert message='Файл Загружен' type='success' showIcon />
+        <Alert message='Файл Загружен' type='success' showIcon style={{ marginBottom: '10px' }} />
       )}
       <Upload {...props}>
         <Button type='primary' icon={<UploadOutlined />}>
