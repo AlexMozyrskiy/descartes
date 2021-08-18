@@ -4,7 +4,7 @@ import XLSX from 'xlsx/dist/xlsx.full.min';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Upload, Button, Alert } from 'antd';
-import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
+import { UploadOutlined, DownloadOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import { initialState } from '../../../../state/features/videoRetreatBookData/reducer';
 import { getArrayForState } from '../../../../library/helpers/forVSPRetreatsRegisterComponent/getObjectForState';
@@ -36,7 +36,10 @@ const VSPRetreatRegister = () => {
     //     authorization: 'authorization-text',
     // },
     onChange(evt) {
-      const selectedFile = typeof evt.fileList[0] !== 'undefined' ? evt.fileList[0].originFileObj : null; // выбранный в браузере файл, один, так как запрещен мульти выбор файлов
+      const selectedFile =
+        typeof evt.fileList[evt.fileList.length - 1] !== 'undefined'
+          ? evt.fileList[evt.fileList.length - 1].originFileObj
+          : null; // выбранный в браузере файл, один, так как запрещен мульти выбор файлов
 
       if (selectedFile) {
         // если файл был выбран. эта проверка чтобы если пользователь нажал кнопку выбрать файл а потом закрыл окно с выбором файла не выбрав его
@@ -91,7 +94,14 @@ const VSPRetreatRegister = () => {
   return (
     <div>
       {!isDataLoaded ? (
-        <Alert message='Загрузите Файл' type='error' showIcon style={{ marginBottom: '10px' }} />
+        <>
+          <Alert message='Загрузите Файл' type='error' showIcon style={{ marginBottom: '10px' }} />
+          <Upload {...props}>
+            <Button type='primary' icon={<UploadOutlined />}>
+              Загрузить файл
+            </Button>
+          </Upload>
+        </>
       ) : (
         <Alert message='Файл Загружен' type='success' showIcon style={{ marginBottom: '10px' }} />
       )}
@@ -101,16 +111,20 @@ const VSPRetreatRegister = () => {
           message='Загружен файл не той структуры, вычисления невозможны'
           type='error'
           showIcon
-          style={{ marginBottom: '10px' }}
+          style={{ marginTop: '10px' }}
         />
       )}
 
-      <Upload {...props}>
-        <Button type='primary' icon={<UploadOutlined />}>
-          Загрузить файл
+      {isDataLoaded && (
+        <Button
+          type='primary'
+          icon={<DownloadOutlined />}
+          onClick={() => onSaveButtonClick()}
+          style={{ marginTop: '10px' }}
+        >
+          Скачать Телеграмму
         </Button>
-      </Upload>
-      <button onClick={() => onSaveButtonClick()}></button>
+      )}
     </div>
   );
 };
