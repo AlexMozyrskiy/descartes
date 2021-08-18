@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import XLSX from 'xlsx/dist/xlsx.full.min';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,17 +12,16 @@ import { setVideoRetreatData, setIsDataLoaded } from '../../../../state/features
 import {
   selectIsDataLoaded,
   selectCalculatedDataVSPRetreatTelegram,
-  selectVideoRetreatData,
 } from '../../../../state/features/videoRetreatBookData/selectors';
 import { createAndUploadWorkBook } from '../../../../library/helpers/common/createAndUploadWorkBook';
-import { createDataForFileDownload } from '../../../../library/helpers/forVSPRetreatsRegisterComponent/createDataForFileDownload';
 
 const VSPRetreatRegister = () => {
   const dispatch = useDispatch();
 
   const isDataLoaded = useSelector(selectIsDataLoaded);
   const calculatingData = useSelector(selectCalculatedDataVSPRetreatTelegram);
-  const data = useSelector(selectVideoRetreatData);
+
+  const [isWrongStructureFileLoaded, setIsWrongStructureFileLoaded] = useState(false);
 
   const onFileDeleteClick = () => {
     dispatch(setVideoRetreatData(initialState.retreatSheetsData));
@@ -48,10 +49,16 @@ const VSPRetreatRegister = () => {
           });
 
           const workSheetDataObj = workBook.Sheets['Приложение 1 '];
-          const arrayForState = getArrayForState(workSheetDataObj);
+          if (typeof workSheetDataObj !== 'undefined' && workSheetDataObj.A4.w) {
+            const arrayForState = getArrayForState(workSheetDataObj);
 
-          dispatch(setVideoRetreatData(arrayForState));
-          dispatch(setIsDataLoaded(true));
+            dispatch(setVideoRetreatData(arrayForState));
+            dispatch(setIsDataLoaded(true));
+            setIsWrongStructureFileLoaded(false);
+          } else {
+            console.error('Загружен файл не той структуры');
+            setIsWrongStructureFileLoaded(true);
+          }
         };
 
         reader.onerror = function (event) {
@@ -88,6 +95,16 @@ const VSPRetreatRegister = () => {
       ) : (
         <Alert message='Файл Загружен' type='success' showIcon style={{ marginBottom: '10px' }} />
       )}
+
+      {isWrongStructureFileLoaded && (
+        <Alert
+          message='Загружен файл не той структуры, вычисления невозможны'
+          type='error'
+          showIcon
+          style={{ marginBottom: '10px' }}
+        />
+      )}
+
       <Upload {...props}>
         <Button type='primary' icon={<UploadOutlined />}>
           Загрузить файл
