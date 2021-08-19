@@ -1,16 +1,10 @@
 import React from 'react';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Layout, Menu } from 'antd';
-import {
-  LaptopOutlined,
-  FileExcelOutlined,
-  VideoCameraOutlined,
-  FileTextOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
+import { VideoCameraOutlined } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
 
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const MySideBar = () => {

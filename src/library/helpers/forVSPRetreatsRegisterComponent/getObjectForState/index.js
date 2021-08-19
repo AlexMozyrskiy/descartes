@@ -1,5 +1,5 @@
 import { getRowsCount } from '../../common/getRowsCount';
-import { definePicketByMeter } from '../../common/definePicketByMeter';
+// import { definePicketByMeter } from '../../common/definePicketByMeter';
 
 export const getArrayForState = (parsedObject) => {
   const rowsCount = getRowsCount(parsedObject);

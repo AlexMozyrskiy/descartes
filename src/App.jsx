@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { Layout } from 'antd';
 import MyHeader from './components/MyHeader/MyHeader';
 import MySideBar from './components/MySideBar/MySideBar';
@@ -10,10 +9,6 @@ import './App.css';
 const { Content } = Layout;
 
 const App = () => {
-  // -------------------------------------------------------------- Хуки ---------------------------------------------------------------------------
-  // const isWeAreOnTheWorkTab = useSelector(selectIsWeAreOnTheWorkTab);
-  // -------------------------------------------------------------- / Хуки -------------------------------------------------------------------------
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <MyHeader />

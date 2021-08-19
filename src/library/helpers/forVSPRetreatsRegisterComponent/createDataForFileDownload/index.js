@@ -29,12 +29,18 @@ export function createDataForFileDownload(data) {
     });
 
     /* ---------- Первая строчка телеграммы ----------------- */
-    const uniqueDistanceNumbersArr = getUniqueNumbersFromArr(distancesList);
+    const uniqueDistanceNumbersArrT = getUniqueNumbersFromArr(distancesList);
+    let uniqueDistanceNumbersArr = [];
+    uniqueDistanceNumbersArrT.forEach((item) => {
+      /* защита от NaN и числа 0 */
+      if (item !== 0 && !isNaN(item) && isFinite(item)) uniqueDistanceNumbersArr.push(item);
+    });
     const uniqueDistanceNumbersStr = uniqueDistanceNumbersArr.join(',');
 
     const regionsNumbersArr = uniqueDistanceNumbersArr.map((item) => {
       const distansInfoObj = distancesAndRegions.find((distanceAndRegion) => distanceAndRegion.distanceNumber === item);
-      return distansInfoObj.regionNumber;
+      /* если не нашли ПЧ в базе вернем 0 */
+      return typeof distansInfoObj === 'undefined' ? 0 : distansInfoObj.regionNumber;
     });
     const uniqueRegionsNumbersArr = getUniqueNumbersFromArr(regionsNumbersArr);
     const uniqueRegionsNumbersStr = uniqueRegionsNumbersArr.join(',');
@@ -58,13 +64,27 @@ export function createDataForFileDownload(data) {
     /* ---------- Вторая строчка телеграммы ----------------- */
 
     /* ---------- Последующие строки телеграммы, перечислем неисправности --------- */
-    data.forEach((item, i) => {
+    const getThred = (thread) => {
+      const dirstLetter = thread.substr(0, 1);
+      if (dirstLetter === 'о') {
+        return 'обе нити';
+      } else if (dirstLetter === 'л') {
+        return 'левая нить';
+      } else if (dirstLetter === 'п') {
+        return 'правая нить';
+      }
+    };
+    data.forEach((item) => {
       forXLSXAoA.push([
-        `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${item.meter}м), ${item.thread} нить ${item.retreat}`,
+        `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${
+          item.meter
+        }м), ${getThred(item.thread)} ${item.retreat}`,
       ]);
 
       forBrowserPageRenderObj.body.push(
-        `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${item.meter}м), ${item.thread} нить ${item.retreat}`
+        `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${
+          item.meter
+        }м), ${getThred(item.thread)} ${item.retreat}`
       );
     });
     /* ---------- / Последующие строки телеграммы, перечислем неисправности ------- */
