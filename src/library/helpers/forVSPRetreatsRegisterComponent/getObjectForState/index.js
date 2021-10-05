@@ -22,6 +22,7 @@ export const getArrayForState = (parsedObject) => {
       retreat: isUndefinedReturnEmtyStr(parsedObject, 'K', i),
       restrictionNumber: isUndefinedReturnEmtyStr(parsedObject, 'L', i),
       speedLimit: isUndefinedReturnEmtyStr(parsedObject, 'M', i),
+      value: isUndefinedReturnEmtyStr(parsedObject, 'N', i)
     });
   }
 

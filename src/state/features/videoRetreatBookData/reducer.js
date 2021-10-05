@@ -18,6 +18,7 @@ export const initialState = {
       retreat: '',
       restrictionNumber: null,
       speedLimit: '',
+      value: ''
     },
   ],
   isDataLoaded: false,
@@ -45,6 +46,7 @@ const videoRetreatDataReducers = (state = initialState, action) => {
             retreat: item.retreat,
             restrictionNumber: +item.restrictionNumber,
             speedLimit: item.speedLimit,
+            value: item.value
           };
         }),
       };

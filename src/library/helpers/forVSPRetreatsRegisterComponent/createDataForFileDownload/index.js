@@ -78,13 +78,13 @@ export function createDataForFileDownload(data) {
       forXLSXAoA.push([
         `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${
           item.meter
-        }м), ${getThred(item.thread)} ${item.retreat}`,
+        }м), ${getThred(item.thread)} ${item.retreat}${item.value === '' ? item.value : `, величина ${item.value}`} `,
       ]);
 
       forBrowserPageRenderObj.body.push(
         `${item.stationName} путь ${item.trackNumber}, ${item.kilometer} км ПК ${item.picket} (${
           item.meter
-        }м), ${getThred(item.thread)} ${item.retreat}`
+        }м), ${getThred(item.thread)} ${item.retreat}${item.value === '' ? item.value : `, величина ${item.value}`} `
       );
     });
     /* ---------- / Последующие строки телеграммы, перечислем неисправности ------- */
