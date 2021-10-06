@@ -13,6 +13,7 @@ const MySideBar = () => {
       <Menu mode='inline' defaultSelectedKeys={['1']} defaultOpenKeys={['1']} style={{ height: '100%' }}>
         <Menu.Item key='1' icon={<VideoCameraOutlined />}>
           <NavLink to='/'>Ведомость учета неисправностей ВСП</NavLink>
+          <NavLink to='/test'>Test</NavLink>
         </Menu.Item>
       </Menu>
     </Sider>
